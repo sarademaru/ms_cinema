@@ -25,7 +25,10 @@ export class TheatersService {
 
   async findAll(): Promise<TheaterResponseDto[]> {
     const theaters = await this.theatersRepository.find({
-      relations: { projector: true },
+      relations: {
+        projector: true,
+        screenings: { theater: true, movie: true },
+      },
     });
     return this.theaterMapper.toResponseDtoList(theaters);
   }
@@ -33,7 +36,10 @@ export class TheatersService {
   async findOne(id: number): Promise<TheaterResponseDto> {
     const theater = await this.theatersRepository.findOne({
       where: { id },
-      relations: { projector: true },
+      relations: {
+        projector: true,
+        screenings: { theater: true, movie: true },
+      },
     });
     if (!theater) {
       throw new NotFoundException(`Theater with id ${id} not found`);

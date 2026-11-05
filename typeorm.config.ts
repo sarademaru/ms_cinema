@@ -2,6 +2,8 @@ import 'dotenv/config';
 import { DataSource } from 'typeorm';
 import { Theater } from './src/theaters/entities/theater.entity';
 import { Projector } from './src/projectors/entities/projector.entity';
+import { Movie } from './src/movies/entities/movie.entity';
+import { Screening } from './src/screenings/entities/screening.entity';
 
 export default new DataSource({
   type: 'mysql',
@@ -10,7 +12,7 @@ export default new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE ?? 'cinema_db',
-  entities: [Theater, Projector],
+  entities: [Theater, Projector, Movie, Screening],
   migrations: [__dirname + '/src/migrations/*{.ts,.js}'],
   synchronize: false,
 });

@@ -5,6 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TheatersModule } from './theaters/theaters.module';
 import { ProjectorsModule } from './projectors/projectors.module';
+import { MoviesModule } from './movies/movies.module';
+import { ScreeningsModule } from './screenings/screenings.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { ProjectorsModule } from './projectors/projectors.module';
     }),
     TheatersModule,
     ProjectorsModule,
+    MoviesModule,
+    ScreeningsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
