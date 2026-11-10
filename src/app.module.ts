@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { SecurityGuard } from './common/guards/security.guard';
 import { TheatersModule } from './theaters/theaters.module';
 import { ProjectorsModule } from './projectors/projectors.module';
 import { MoviesModule } from './movies/movies.module';
@@ -40,6 +42,12 @@ import { ScreeningsModule } from './screenings/screenings.module';
     ScreeningsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: SecurityGuard,
+    },
+  ],
 })
 export class AppModule {}
