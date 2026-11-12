@@ -6,9 +6,13 @@ import { Screening } from './entities/screening.entity';
 import { ScreeningsController } from './screenings.controller';
 import { ScreeningsRepository } from './repositories/screenings.repository';
 import { ScreeningsService } from './screenings.service';
+import { NotificationsModule } from '../gateways/notifications/notifications.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Screening, Theater, Movie])],
+  imports: [
+    TypeOrmModule.forFeature([Screening, Theater, Movie]),
+    NotificationsModule,
+  ],
   controllers: [ScreeningsController],
   providers: [ScreeningsService, ScreeningsRepository],
 })

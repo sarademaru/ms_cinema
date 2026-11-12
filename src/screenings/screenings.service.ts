@@ -9,6 +9,7 @@ import { UpdateScreeningDto } from './dto/update-screening.dto';
 import { Screening } from './entities/screening.entity';
 import { ScreeningMapper } from './mappers/screening.mapper';
 import { ScreeningsRepository } from './repositories/screenings.repository';
+import { NotificationsGateway } from '../gateways/notifications/notifications.gateway';
 
 @Injectable()
 export class ScreeningsService {
@@ -20,6 +21,7 @@ export class ScreeningsService {
     @InjectRepository(Movie)
     private readonly moviesRepository: Repository<Movie>,
     private readonly customScreeningsRepository: ScreeningsRepository,
+    private readonly notificationsGateway: NotificationsGateway, //hacemos la inyeccion de notifications
   ) {}
 
   async create(dto: CreateScreeningDto): Promise<ScreeningResponseDto> {
@@ -28,7 +30,17 @@ export class ScreeningsService {
     const saved = await this.screeningsRepository.save(
       ScreeningMapper.toEntity(dto, theater, movie),
     );
-    return this.findOne(saved.id);
+    const response = await this.findOne(saved.id);
+
+    this.notificationsGateway.broadcastNotification({
+      event: 'new_notification', //nombre del evento que se va a emitir podria ser un numero de telefono, un correo electronico, un id de usuario, etc
+      data: {
+        message: 'Nueva función creada', //mensaje que se va a enviar en la notificacion
+        screening: response,
+      },
+    });
+
+    return response;
   }
 
   async findAll(): Promise<ScreeningResponseDto[]> {

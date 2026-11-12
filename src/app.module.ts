@@ -9,6 +9,7 @@ import { TheatersModule } from './theaters/theaters.module';
 import { ProjectorsModule } from './projectors/projectors.module';
 import { MoviesModule } from './movies/movies.module';
 import { ScreeningsModule } from './screenings/screenings.module';
+import { NotificationsModule } from './gateways/notifications/notifications.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { ScreeningsModule } from './screenings/screenings.module';
     ProjectorsModule,
     MoviesModule,
     ScreeningsModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [
